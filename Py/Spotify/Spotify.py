@@ -22,16 +22,14 @@ def CurrentSong():
         print("No song is currently playing")
     else: 
         Song = CurSong["item"]["name"]
-        #Artist = CurSong['item']['artists'][0]['name'] # https://stackoverflow.com/a/63907495 the [0]['name'] part fixed it :)
         print('\x1B[38;5;211m[DEBUG] \x1B[0mCurrent song is', Song) #used to test if filtering item name was working
-        # print('\x1B[38;5;211m[DEBUG] \x1B[0mCurrent artist is', Artist)
         return Song 
 def CurrentArtist():
     CurSong = sp.current_user_playing_track() 
     if CurSong is None:
         print("No song is currently playing")
     else: 
-        Artist = CurSong['item']['artists'][0]['name']
+        Artist = CurSong['item']['artists'][0]['name'] # https://stackoverflow.com/a/63907495 the [0]['name'] part fixed it :)
         print('\x1B[38;5;211m[DEBUG] \x1B[0mCurrent artist is', Artist)
         return Artist
 
