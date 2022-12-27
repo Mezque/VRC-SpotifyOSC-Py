@@ -1,7 +1,9 @@
 import spotipy 
 from spotipy.oauth2 import SpotifyOAuth
+from pythonosc.udp_client import SimpleUDPClient
+import time
 
-Spot_URI: str = 'http://localhost:8888/spotify/callback' 
+client = SimpleUDPClient("127.0.0.1", 9001)
 
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id="", #put your client id here
                                                client_secret="", #put your client secret here
@@ -20,18 +22,30 @@ def CurrentSong():
     CurSong = sp.current_user_playing_track() 
     if CurSong is None:
         print("No song is currently playing")
+        return None
     else: 
         Song = CurSong["item"]["name"]
-        print('\x1B[38;5;211m[DEBUG] \x1B[0mCurrent song is', Song) #used to test if filtering item name was working
+        #print('\x1B[38;5;211m[DEBUG] \x1B[0mCurrent song is', Song) #used to test if filtering item name was working
         return Song 
 def CurrentArtist():
     CurSong = sp.current_user_playing_track() 
     if CurSong is None:
         print("No song is currently playing")
+        return None
     else: 
         Artist = CurSong['item']['artists'][0]['name'] # https://stackoverflow.com/a/63907495 the [0]['name'] part fixed it :)
-        print('\x1B[38;5;211m[DEBUG] \x1B[0mCurrent artist is', Artist)
+        #print('\x1B[38;5;211m[DEBUG] \x1B[0mCurrent artist is', Artist)
         return Artist
+def loop():
+    prev_song = ""
+    while True:
+        cur_song = CurrentSong()
+        cur_artist = CurrentArtist()
+        if cur_song != prev_song:
+            print("- Currently Playing:", cur_song, "by", cur_artist)
+            client.send_message("/chatbox/input", f"Now playing {cur_song} by {cur_artist}") #/chatbox/input
+            prev_song = cur_song
+        time.sleep(5) # pause for 5 seconds before checking again
 
 def main():
     print("--------------------------------")
@@ -39,8 +53,8 @@ def main():
     print("- Current User:", DisplayName())
     print("- Currently Playing:", CurrentSong(), 'by', CurrentArtist())
     print("--------------------------------")
-                                     
-       
+    loop()
+    
 main()
 if __name__ == "__main__":
     main()
