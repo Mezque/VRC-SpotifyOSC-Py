@@ -13,7 +13,7 @@ def FirstTimeSetUp():
     print("Checking if clientID.txt exists.")
     exist = os.path.exists("Settings/clientID.txt")
     if exist == False:
-        print("clientID.txt doesn't exist, please input now.")
+        print("clientID.txt doesn't exist, please input now. (the program will most likely restart after you finish, just relaunch it.)")
         exist2 = os.path.exists("Settings")
         if exist2 == False:
             os.mkdir("Settings")
@@ -29,8 +29,13 @@ def FirstTimeSetUp():
     else:
         print("clientID exists, welcome to SpotifyAPI OSC for Python v0.3.0")
 
-file1 = open("Settings/clientID.txt")
-file2 = open("Settings/clientSecret.txt")
+try:
+    file1 = open("Settings/clientID.txt")
+    file2 = open("Settings/clientSecret.txt")
+except(FileNotFoundError):
+    FirstTimeSetUp()
+
+
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=f"{file1}", #put your client id here
                                                client_secret=f"{file2}", #put your client secret here
                                                redirect_uri="http://localhost:8888/spotify/callback",
