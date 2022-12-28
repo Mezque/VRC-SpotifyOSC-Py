@@ -1,2 +1,2 @@
-spotipy #python spotify API
-python-osc #osc 
+spotipy #python spotify API 2.22.0
+python-osc #osc 1.8.0

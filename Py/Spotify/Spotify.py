@@ -25,7 +25,6 @@ def CurrentSong():
         return None
     else: 
         Song = CurSong["item"]["name"]
-        #print('\x1B[38;5;211m[DEBUG] \x1B[0mCurrent song is', Song) #used to test if filtering item name was working
         return Song 
 def CurrentArtist():
     CurSong = sp.current_user_playing_track() 
@@ -34,7 +33,6 @@ def CurrentArtist():
         return None
     else: 
         Artist = CurSong['item']['artists'][0]['name'] # https://stackoverflow.com/a/63907495 the [0]['name'] part fixed it :)
-        #print('\x1B[38;5;211m[DEBUG] \x1B[0mCurrent artist is', Artist)
         return Artist
 def loop():
     prev_song = ""
@@ -45,9 +43,9 @@ def loop():
         if cur_song != prev_song:
             print("- Currently Playing:", cur_song, "by", cur_artist)
             Song[0] = f"Now playing {cur_song} by {cur_artist}"
-            client.send_message("/chatbox/input",Song) #/chatbox/input | SimpleUDPClient.send_message() takes 3 positional arguments but 4 were given, client.send_message("/chatbox/input", f"Now playing {cur_song} by {cur_artist}", True)
+            client.send_message("/chatbox/input",Song) #/chatbox/input 
             prev_song = cur_song
-        time.sleep(2) # pause for 5 seconds before checking again
+        time.sleep(2) # pause for 2 seconds before checking again
 
 def main():
     print("--------------------------------")
