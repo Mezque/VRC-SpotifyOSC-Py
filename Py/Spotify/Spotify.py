@@ -3,13 +3,13 @@ from spotipy.oauth2 import SpotifyOAuth
 from pythonosc.udp_client import SimpleUDPClient
 import time
 
-client = SimpleUDPClient("127.0.0.1", 9001)
+client = SimpleUDPClient("127.0.0.1", 9000)
 
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id="", #put your client id here
                                                client_secret="", #put your client secret here
                                                redirect_uri="http://localhost:8888/spotify/callback",
                                                scope="user-read-currently-playing")) # You can find out more about what this means here, https://developer.spotify.com/documentation/general/guides/authorization/scopes/ basically it allows the program to read your current playing song, but no other control over your spotify account.
-
+Song = ["", True]
 # 1: Go to https://developer.spotify.com/dashboard/ and log in with your Spotify account and then create yourself a new app. 
 # 2: You will be redirected to the dashboard of your app, copy the client id and client secret (press Show Client Secret) and paste them in the apove string feilds as discribed.
 # !NOTE!: Always store the client secret key securely; never reveal it publicly! If you suspect that the secret key has been compromised, regenerate it immediately by clicking the ROTATE button on the app overview page!!!
@@ -38,14 +38,16 @@ def CurrentArtist():
         return Artist
 def loop():
     prev_song = ""
+    client = SimpleUDPClient("127.0.0.1", 9000)
     while True:
         cur_song = CurrentSong()
         cur_artist = CurrentArtist()
         if cur_song != prev_song:
             print("- Currently Playing:", cur_song, "by", cur_artist)
-            client.send_message("/chatbox/input", f"Now playing {cur_song} by {cur_artist}") #/chatbox/input
+            Song[0] = f"Now playing {cur_song} by {cur_artist}"
+            client.send_message("/chatbox/input",Song) #/chatbox/input | SimpleUDPClient.send_message() takes 3 positional arguments but 4 were given, client.send_message("/chatbox/input", f"Now playing {cur_song} by {cur_artist}", True)
             prev_song = cur_song
-        time.sleep(5) # pause for 5 seconds before checking again
+        time.sleep(2) # pause for 5 seconds before checking again
 
 def main():
     print("--------------------------------")
