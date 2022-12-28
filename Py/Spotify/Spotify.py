@@ -93,7 +93,6 @@ def loop():
             loop()
 
 def main():
-    FirstTimeSetUp()
     song,artist,song_lenth,song_pos = get_current_song_and_artist()
     print("--------------------------------")
     print("- Starting Spotify API Python  -")
