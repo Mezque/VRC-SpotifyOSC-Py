@@ -41,7 +41,7 @@ $ py Spotify.py
 
 > **Note**
 > If you're using Windows, there is included bat files to do step 3 and 4. </br>
-> (if you choose to download below you don't need to clone the repositroy) 
+> (if you choose to download below you don't need to clone the repositroy or install git) 
 
 ## Download
 
