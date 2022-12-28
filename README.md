@@ -41,11 +41,11 @@ $ py Spotify.py
 
 > **Note**
 > If you're using Windows, there is included bat files to do step 3 and 4. </br>
-> (if you choose to download below you don't need to clone the repositroy or install git) 
-
+> (if you choose to download below you don't need to clone the repositroy or install git) </br>
+> If Python is failing to run properly on Windows install it from the [Microsoft Store](https://apps.microsoft.com/store/detail/python-311/9NRWMJP3717K?hl=en-us&gl=us) instead of the python website; this is a Windows problem. </br>
 ## Download
 
-You can [download](https://github.com/Mezque/VRC-Music-Py/releases/download/v1.0.0/SpotifyPythonOSCV1-0-0.zip) the latest version as well if you don't want to use git to clone the repository. 
+You can [download](https://github.com/Mezque/VRC-Music-Py/releases/download/download/Spotify.zip) the latest version as well if you don't want to use git to clone the repository. 
 
 ## Credits
 
