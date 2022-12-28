@@ -19,7 +19,8 @@
   - Slightly more optimized than reading the Spotify program name.
 * Cross platform
   - Windows, macOS and Linux ready.
-
+> **Note**
+>:Usage of the Spotify API requires a premium account; this will not work with free accounts.
 ## How To Use
 
 To clone and run this application, you'll need [Python](https://www.python.org/downloads/) and [git](https://gitforwindows.org/) (if on windows) From your command line:
@@ -40,11 +41,11 @@ $ py Spotify.py
 
 > **Note**
 > If you're using Windows, there is included bat files to do step 3 and 4. </br>
-> (if you choose to download below you don't need to clone the repositroy) 
+> (if you choose to download below you don't need to clone the repositroy or install git) 
 
 ## Download
 
-You can [download]() the latest version as well if you don't want to use git to clone the repository. 
+You can [download](https://github.com/Mezque/VRC-Music-Py/releases/download/v1.0.0/SpotifyPythonOSCV1-0-0.zip) the latest version as well if you don't want to use git to clone the repository. 
 
 ## Credits
 
