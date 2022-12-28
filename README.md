@@ -8,7 +8,7 @@
   <a href="#key-features">Key Features</a> •
   <a href="#how-to-use">How To Use</a> •
   <a href="#download">Download</a> •
-  <a href="Spotify-Dev-Portal">Dev Portal Instructions</a> •
+  <a href="spotify-dev-portal">Dev Portal Instructions</a> •
   <a href="#credits">Credits</a> •
   <a href="#license">License</a>
 </p>
