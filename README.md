@@ -8,6 +8,7 @@
   <a href="#key-features">Key Features</a> •
   <a href="#how-to-use">How To Use</a> •
   <a href="#download">Download</a> •
+  <a href="Spotify-Dev-Portal">Dev Portal Instructions</a> •
   <a href="#credits">Credits</a> •
   <a href="#license">License</a>
 </p>
@@ -48,6 +49,12 @@ Open Spotify.py and set `client_id` and `client_secret` to their respected value
 
 You can [download](https://github.com/Mezque/VRC-Music-Py/releases/download/download/Spotify.zip) the latest version as well if you don't want to use git to clone the repository. 
 
+## Spotify Dev Portal
+How to set up the application,
+1. Head to the [Spotify Dev Portal](https://developer.spotify.com/dashboard/) and log into your account. 
+2. Press the green button on the top of the right side that says "Create an app", the name doesn't matter and a description is not required.
+3. Open up the newly created app and copy your Client ID and set this value in the `Spotify.py` file. Do the same thing for the Client Secret after pressing Show Client Secret.
+4. Press the green button around the same location where the create app button was on the previous menu and under the section "Redirect URIs" put `http://localhost:8888/spotify/callback`
 ## Credits
 
 This software uses the following open source packages:
