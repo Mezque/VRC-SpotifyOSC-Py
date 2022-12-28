@@ -15,19 +15,18 @@
 
 ## Key Features
 * Customizable
-  - Able to change the chatbox text very easy.
+  - Able to change the chatbox text formatting very easy! Just change the formatting on</br> `Song1[0] = f"Now playing {cur_song} by {cur_artist} {time2}/{time1}"` (time display/OSC always mode)</br> or `Song1[0] = f"Now playing {cur_song} by {cur_artist}"` (send once per song mode).
 * Uses API
-  - Slightly more optimized than reading the Spotify program name.
+  - Slightly more optimized than reading the Spotify program name, though I do believe python will end up using slightly more ram then some other solutions, less cpu usage.
 * Cross platform
   - Windows, macOS and Linux ready.
 * Timestamp and song length display. (updated aprox every 5 seconds)</br>
   <img width="364" alt="image" src="https://user-images.githubusercontent.com/31026406/209856558-0795712f-80d3-4e2c-9e42-25851255b0f9.png">
 * Or alternatively only send playing song once per each song, checked for song change on a 2 second interval. </br>
   <img width="270" alt="image" src="https://user-images.githubusercontent.com/31026406/209856924-3bc72e83-9d65-415f-b43f-cf0f6d2d306c.png">
-
-
+  
 > **Note**
->:Usage of the Spotify API requires a premium account; this will not work with free accounts.
+>: Usage of the Spotify API requires a premium account; this will not work with free accounts.
 ## How To Use
 
 To clone and run this application, you'll need [Python](https://www.python.org/downloads/) and [git](https://gitforwindows.org/) (if on windows) From your command line:
@@ -49,11 +48,11 @@ Open Spotify.py and set `client_id` and `client_secret` to their respected value
 > **Note**
 > If you're using Windows, there is included bat files to do step 3 and 4. </br>
 > (if you choose to download below you don't need to clone the repositroy or install git) </br>
-> If Python is failing to run properly on Windows install it from the [Microsoft Store](https://apps.microsoft.com/store/detail/python-311/9NRWMJP3717K?hl=en-us&gl=us) instead of the python website; this is a Windows problem. </br>
+> If Python is failing to run properly on Windows install it from the [Microsoft Store](https://apps.microsoft.com/store/detail/python-311/9NRWMJP3717K?hl=en-us&gl=us) instead of the python website for an easy fix; this is a Windows problem to do with how python is set up under your system variables. </br>
 
 ## Download
 
-You can [download](https://github.com/Mezque/VRC-Music-Py/releases/download/download/Spotify.zip) the latest version as well if you don't want to use git to clone the repository. 
+You can [download](https://github.com/Mezque/VRC-Music-Py/releases/download/download/Spotify.zip) the latest version as well if you don't want to use git to clone the repository. It's the same thing just slower for people less experienced with usage of git through a CLI.
 
 ## Spotify Dev Portal
 How to set up the application,
