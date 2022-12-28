@@ -9,8 +9,30 @@ import threading
 client = SimpleUDPClient("127.0.0.1", 9000)
 config = configparser.ConfigParser()
 
-sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id="", #put your client id here
-                                               client_secret="", #put your client secret here
+def FirstTimeSetUp():
+    print("Checking if clientID.txt exists.")
+    exist = os.path.exists("Settings/clientID.txt")
+    if exist == False:
+        print("clientID.txt doesn't exist, please input now.")
+        exist2 = os.path.exists("Settings")
+        if exist2 == False:
+            os.mkdir("Settings")
+        CLIENTID=input(("\x1b[5m\x1b[31mWrite client ID in please.\x1b[0m"))
+        CLIENTSECRET=input(("\x1b[5m\x1b[31mWrite client secret in please. (NOTE: do not share)\x1b[0m"))
+        print("Thank you, welcome to SpotifyAPI OSC for Python v0.3.0")
+        writeNewFile = open('Settings/clientID.txt', 'w')
+        writeNewFile.write(CLIENTID)
+        writeNewFile.close
+        writeNewFile2 = open('Settings/clientSecret.txt', 'w')
+        writeNewFile2.write(CLIENTSECRET)
+        writeNewFile2.close
+    else:
+        print("clientID exists, welcome to SpotifyAPI OSC for Python v0.3.0")
+
+file1 = open("Settings/clientID.txt")
+file2 = open("Settings/clientSecret.txt")
+sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=f"{file1}", #put your client id here
+                                               client_secret=f"{file2}", #put your client secret here
                                                redirect_uri="http://localhost:8888/spotify/callback",
                                                scope="user-read-currently-playing")) # You can find out more about what this means here, https://developer.spotify.com/documentation/general/guides/authorization/scopes/ basically it allows the program to read your current playing song, but no other control over your spotify account.
 Song1 = ["", True]
@@ -19,7 +41,6 @@ Song1 = ["", True]
 # !NOTE!: Always store the client secret key securely; never reveal it publicly! If you suspect that the secret key has been compromised, regenerate it immediately by clicking the ROTATE button on the app overview page!!!
 # It is time to configure our app. Click on Edit Settings and find "Redirect URLs", type http://localhost:8888/spotify/callback in the feild.
 # Refrence: https://developer.spotify.com/documentation/general/guides/authorization/app-settings/ 
-
 def TimeConversion(time):
     seconds, time = divmod(time, 1000)
     minutes, seconds = divmod(seconds, 60)
@@ -91,6 +112,7 @@ def loop():
             loop()
 
 def main():
+    FirstTimeSetUp()
     song,artist,song_lenth,song_pos = get_current_song_and_artist()
     print("--------------------------------")
     print("- Starting Spotify API Python  -")
