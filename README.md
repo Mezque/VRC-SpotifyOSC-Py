@@ -20,6 +20,12 @@
   - Slightly more optimized than reading the Spotify program name.
 * Cross platform
   - Windows, macOS and Linux ready.
+* Timestamp and song length display. (updated aprox every 5 seconds)</br>
+  <img width="364" alt="image" src="https://user-images.githubusercontent.com/31026406/209856558-0795712f-80d3-4e2c-9e42-25851255b0f9.png">
+* Or alternatively only send playing song once per each song, checked for song change on a 2 second interval. </br>
+  <img width="270" alt="image" src="https://user-images.githubusercontent.com/31026406/209856924-3bc72e83-9d65-415f-b43f-cf0f6d2d306c.png">
+
+
 > **Note**
 >:Usage of the Spotify API requires a premium account; this will not work with free accounts.
 ## How To Use
