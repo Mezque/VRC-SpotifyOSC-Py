@@ -9,38 +9,8 @@ import threading
 client = SimpleUDPClient("127.0.0.1", 9000)
 config = configparser.ConfigParser()
 
-def FirstTimeSetUp():
-    print("Checking if clientID.txt exists.")
-    exist = os.path.exists("Settings/clientID.txt")
-    if exist == False:
-        print("clientID.txt doesn't exist, please input now. (the program will most likely restart after you finish, just relaunch it.)")
-        exist2 = os.path.exists("Settings")
-        if exist2 == False:
-            os.mkdir("Settings")
-        CLIENTID=input(("\x1b[5m\x1b[31mWrite client ID in please.\x1b[0m"))
-        CLIENTSECRET=input(("\x1b[5m\x1b[31mWrite client secret in please. (NOTE: do not share)\x1b[0m"))
-        print("Thank you, welcome to SpotifyAPI OSC for Python v0.3.0")
-        writeNewFile = open('Settings/clientID.txt', 'w')
-        writeNewFile.write(CLIENTID)
-        writeNewFile.close
-        writeNewFile2 = open('Settings/clientSecret.txt', 'w')
-        writeNewFile2.write(CLIENTSECRET)
-        writeNewFile2.close
-    else:
-        print("clientID exists, welcome to SpotifyAPI OSC for Python v0.3.0")
-
-try:
-    with open("Settings/clientID.txt") as file1:
-        print("ClientID: "+file1.read())
-    with open("Settings/clientSecret.txt") as file2:
-        print("ClientSecret: "+file2.read())
-    file1.close()
-    file2.close()
-except(FileNotFoundError):
-    FirstTimeSetUp()
-
-sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=f"{file1}", #put your client id here
-                                               client_secret=f"{file2}", #put your client secret here
+sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id="", #put your client id here
+                                               client_secret="", #put your client secret here
                                                redirect_uri="http://localhost:8888/spotify/callback",
                                                scope="user-read-currently-playing")) # You can find out more about what this means here, https://developer.spotify.com/documentation/general/guides/authorization/scopes/ basically it allows the program to read your current playing song, but no other control over your spotify account.
 Song1 = ["", True]
