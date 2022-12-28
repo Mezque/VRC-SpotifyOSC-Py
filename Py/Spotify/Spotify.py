@@ -1,4 +1,4 @@
-import spotipy 
+import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 from pythonosc.udp_client import SimpleUDPClient
 import time
@@ -30,11 +30,14 @@ def FirstTimeSetUp():
         print("clientID exists, welcome to SpotifyAPI OSC for Python v0.3.0")
 
 try:
-    file1 = open("Settings/clientID.txt")
-    file2 = open("Settings/clientSecret.txt")
+    with open("Settings/clientID.txt") as file1:
+        print("ClientID: "+file1.read())
+    with open("Settings/clientSecret.txt") as file2:
+        print("ClientSecret: "+file2.read())
+    file1.close()
+    file2.close()
 except(FileNotFoundError):
     FirstTimeSetUp()
-
 
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=f"{file1}", #put your client id here
                                                client_secret=f"{file2}", #put your client secret here
@@ -80,7 +83,10 @@ def Prefs():
         config.read('Settings/settings.ini')
     else:
         print("Prefs file doesn't exist, creating now.")
-        os.mkdir("Settings")
+        try:
+            os.mkdir("Settings")
+        except(FileExistsError): #i hate windows
+            print("directory already exist")
         writeNewFile = open('Settings/settings.ini', 'w')
         writeNewFile.write('[Preferences]\nKeepSendingOSC=true')
         writeNewFile.close
