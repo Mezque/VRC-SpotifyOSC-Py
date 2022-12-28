@@ -32,7 +32,7 @@ def get_current_song_and_artist():
     CurSong = sp.current_user_playing_track()
     if CurSong is None:
         print("No song is currently playing")
-        return None, None
+        return None, None, None, None
     else:
         Song = CurSong["item"]["name"]
 
@@ -58,30 +58,37 @@ def Prefs():
         writeNewFile = open('Settings/settings.ini', 'w')
         writeNewFile.write('[Preferences]\nKeepSendingOSC=true')
         writeNewFile.close
+stop_timer=False
+def send_message():
+    song, artist, song_lenth, song_pos = get_current_song_and_artist()
+    cur_song = song
+    cur_artist = artist
+    time1 = song_lenth
+    time2 = song_pos
+    Song1[0] = f"Now playing {cur_song} by {cur_artist} {time2}/{time1}"
+    client.send_message("/chatbox/input",Song1) 
+    if not stop_timer:
+        thread = threading.Timer(5, send_message)
+        thread.start()
 
 def loop():
     prev_song = ""
-    while True:
-        song,artist,song_lenth,song_pos = get_current_song_and_artist()
-        cur_song = song
-        cur_artist = artist
-        KeepSendingOSC = config.getboolean('Preferences', 'KeepSendingOSC')
-        if KeepSendingOSC == True:
-            if cur_song != prev_song:
-                print("- Currently Playing:", cur_song, "by", cur_artist)
-                prev_song = cur_song
-            time1 = song_lenth
-            time2 = song_pos
-            Song1[0] = f"Now playing {cur_song} by {cur_artist} {time2}/{time1}"
-            client.send_message("/chatbox/input",Song1) #want to clean this up with threading but it was working not as expected, will look more into later after getting the feature out in the first place.
-        time.sleep(2)
-
+    song, artist, song_lenth, song_pos = get_current_song_and_artist()
+    cur_song = song
+    cur_artist = artist
+    KeepSendingOSC = config.getboolean('Preferences', 'KeepSendingOSC')
+    if KeepSendingOSC:
         if cur_song != prev_song:
             print("- Currently Playing:", cur_song, "by", cur_artist)
-            Song1[0] = f"Now playing {cur_song} by {cur_artist}"
-            client.send_message("/chatbox/input",Song1) #/chatbox/input 
             prev_song = cur_song
-        time.sleep(2) # pause for 2 seconds before checking again
+        thread2 = threading.Timer(5, send_message)
+        thread2.start()
+    else:
+        if cur_song != prev_song:
+            Song1[0] = f"Now playing {cur_song} by {cur_artist}"
+            client.send_message("/chatbox/input",Song1) 
+            time.sleep(2)
+            loop()
 
 def main():
     song,artist,song_lenth,song_pos = get_current_song_and_artist()
