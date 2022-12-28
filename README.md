@@ -45,7 +45,7 @@ $ py Spotify.py
 
 ## Download
 
-You can [download](https://github.com/Mezque/VRC-Music-Py/releases/download/v1.0.0/SpotifyPythonOSCV1-0-0.zip) the latest version as well if you don't want to use git to clone the repository. 
+You can [download](https://github.com/Mezque/VRC-Music-Py/releases/download/download/Spotify.zip) the latest version as well if you don't want to use git to clone the repository. 
 
 ## Credits
 
