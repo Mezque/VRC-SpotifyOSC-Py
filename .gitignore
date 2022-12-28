@@ -1,2 +1,2 @@
 **/*.cache
-\Py\Spotify\Settings
+/Py/Spotify/Settings
