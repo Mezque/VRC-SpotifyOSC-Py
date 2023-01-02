@@ -45,7 +45,7 @@ $ pip install -r requirements.txt
 # Run the app
 $ py Spotify.py
 ```
-Open Spotify.py and set `client_id` and `client_secret` to their respected value on your created application from the [Spotify Dev Portal](https://developer.spotify.com/dashboard/)
+Open Spotify.py and set `client_id` and `client_secret` to their respected value on your created application from the [Spotify Dev Portal](https://developer.spotify.com/dashboard/). Instructions [here](https://github.com/Mezque/VRC-SpotifyOSC-Py#spotify-dev-portal)
 > **Note**
 > If you're using Windows, there is included bat files to do step 3 and 4. </br>
 > (if you choose to download below you don't need to clone the repositroy or install git) </br>
