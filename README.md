@@ -34,10 +34,10 @@ To clone and run this application, you'll need [Python](https://www.python.org/d
 
 ```bash
 # Clone this repository
-$ git clone https://github.com/Mezque/VRC-Music-Py
+$ git clone https://github.com/Mezque/VRC-SpotifyOSC-Py
 
 # Go into the repository
-$ cd VRC-Music-Py/Py/Spotify
+$ cd VRC-SpotifyOSC-Py/Py/Spotify
 
 # Install dependencies
 $ pip install -r requirements.txt
