@@ -1,5 +1,5 @@
 <h1 align="center">
-  VRC-Spotify-Py
+  VRC-SpotifyOSC-Py
 </h1>
 
 <h4 align="center">A simple Spotify OSC chatbox for VRChat using SpotifyAPI.</h4>
