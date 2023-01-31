@@ -17,7 +17,7 @@
 * Customizable
   - Able to change the chatbox text formatting very easy! Just change the formatting on</br> `Song1[0] = f"Now playing {cur_song} by {cur_artist} {time2}/{time1}"` (time display/OSC always mode)</br> or `Song1[0] = f"Now playing {cur_song} by {cur_artist}"` (send once per song mode).
 * Uses API
-  - Slightly more optimized than reading the Spotify program name, though I do believe python will end up using slightly more ram then some other solutions, less cpu usage.
+  - Slightly more optimized than reading the Spotify program name, or limiting to Windows only via usage of the godawful Windows Now Playing API, plus with the added song scrobble time feature returned by SpotifyAPI.
   - Able to display the current song playing on any device due to using API to retrieve playing information.
 * Cross platform
   - Windows, macOS and Linux ready.
