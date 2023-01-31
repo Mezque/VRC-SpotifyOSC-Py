@@ -30,7 +30,7 @@
 >: Usage of the Spotify API requires a premium account; this will not work with free accounts.
 ## How To Use
 
-To clone and run this application, you'll need [Python](https://www.python.org/downloads/) and [git](https://gitforwindows.org/) (if on windows) From your command line:
+To clone and run this application, you'll need [Python](https://www.python.org/downloads/) and [git](https://gitforwindows.org/) (links for windows) From your command line:
 
 ```bash
 # Clone this repository
