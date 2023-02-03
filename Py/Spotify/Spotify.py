@@ -6,10 +6,10 @@ import configparser
 import os.path
 import threading
 
-client = SimpleUDPClient("127.0.0.1", 9000)
-config = configparser.ConfigParser()
+CLIENT = SimpleUDPClient("127.0.0.1", 9000)
+CONFIG = configparser.ConfigParser()
 
-sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id="", #put your client id here
+SP = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id="", #put your client id here
                                                client_secret="", #put your client secret here
                                                redirect_uri="http://localhost:8888/spotify/callback",
                                                scope="user-read-currently-playing")) # You can find out more about what this means here, https://developer.spotify.com/documentation/general/guides/authorization/scopes/ basically it allows the program to read your current playing song, but no other control over your spotify account.
@@ -25,10 +25,10 @@ def TimeConversion(time):
     return seconds, minutes
 
 def DisplayName():
-    return sp.current_user()['display_name'] #returns the display name of the user.
-     
+    return SP.current_user()['display_name'] #returns the display name of the user.
+
 def get_current_song_and_artist():
-    CurSong = sp.current_user_playing_track()
+    CurSong = SP.current_user_playing_track()
     if CurSong is None:
         print("No song is currently playing")
         return None, None, None, None
@@ -50,7 +50,7 @@ def get_current_song_and_artist():
 def Prefs():
     exist = os.path.exists("Settings/settings.ini")
     if exist == True:
-        config.read('Settings/settings.ini')
+        CONFIG.read('Settings/settings.ini')
     else:
         print("Prefs file doesn't exist, creating now.")
         try:
@@ -68,7 +68,7 @@ def send_message():
     time1 = song_lenth
     time2 = song_pos
     Song1[0] = f"Now playing {cur_song} by {cur_artist} {time2}/{time1}"
-    client.send_message("/chatbox/input",Song1) 
+    CLIENT.send_message("/chatbox/input",Song1) 
     if not stop_timer:
         thread = threading.Timer(5, send_message)
         thread.start()
@@ -78,7 +78,7 @@ def loop():
     song, artist, song_lenth, song_pos = get_current_song_and_artist()
     cur_song = song
     cur_artist = artist
-    KeepSendingOSC = config.getboolean('Preferences', 'KeepSendingOSC')
+    KeepSendingOSC = CONFIG.getboolean('Preferences', 'KeepSendingOSC')
     if KeepSendingOSC:
         if cur_song != prev_song:
             print("- Currently Playing:", cur_song, "by", cur_artist)
@@ -88,7 +88,7 @@ def loop():
     else:
         if cur_song != prev_song:
             Song1[0] = f"Now playing {cur_song} by {cur_artist}"
-            client.send_message("/chatbox/input",Song1) 
+            CLIENT.send_message("/chatbox/input",Song1) 
             time.sleep(2)
             loop()
 
