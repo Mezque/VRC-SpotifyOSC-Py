@@ -14,15 +14,13 @@ SP = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id="", #put your client id
                                                redirect_uri="http://localhost:8888/spotify/callback",
                                                scope="user-read-currently-playing")) # You can find out more about what this means here, https://developer.spotify.com/documentation/general/guides/authorization/scopes/ basically it allows the program to read your current playing song, but no other control over your spotify account.
 Song1 = ["", True]
-# 1: Go to https://developer.spotify.com/dashboard/ and log in with your Spotify account and then create yourself a new app. 
-# 2: You will be redirected to the dashboard of your app, copy the client id and client secret (press Show Client Secret) and paste them in the apove string feilds as discribed.
-# !NOTE!: Always store the client secret key securely; never reveal it publicly! If you suspect that the secret key has been compromised, regenerate it immediately by clicking the ROTATE button on the app overview page!!!
-# It is time to configure our app. Click on Edit Settings and find "Redirect URLs", type http://localhost:8888/spotify/callback in the feild.
-# Refrence: https://developer.spotify.com/documentation/general/guides/authorization/app-settings/ 
-def TimeConversion(time):
-    seconds, time = divmod(time, 1000)
-    minutes, seconds = divmod(seconds, 60)
-    return seconds, minutes
+'''
+1: Go to https://developer.spotify.com/dashboard/ and log in with your Spotify account and then create yourself a new app. 
+2: You will be redirected to the dashboard of your app, copy the client id and client secret (press Show Client Secret) and paste them in the apove string feilds as discribed.
+!NOTE!: Always store the client secret key securely; never reveal it publicly! If you suspect that the secret key has been compromised, regenerate it immediately by clicking the ROTATE button on the app overview page!!!
+It is time to configure our app. Click on Edit Settings and find "Redirect URLs", type http://localhost:8888/spotify/callback in the feild.
+Refrence: https://developer.spotify.com/documentation/general/guides/authorization/app-settings/
+'''
 
 def DisplayName():
     return SP.current_user()['display_name'] #returns the display name of the user.
@@ -34,18 +32,16 @@ def get_current_song_and_artist():
         return None, None, None, None
     else:
         Song = CurSong["item"]["name"]
-
         Artist = CurSong['item']['artists'][0]['name']
-
         Length = CurSong['item']["duration_ms"]
-        sec,min = TimeConversion(int(Length))
-        song_lenth=("{0}:{1}".format(min,sec))
+        minutes, seconds = divmod(int(Length) // 1000, 60)
+        song_length = f"{minutes}:{seconds:02d}"
 
         Position = CurSong["progress_ms"]
-        sec,min = TimeConversion(int(Position))
-        song_pos=("{0}:{1}".format(min,sec))
+        minutes, seconds = divmod(int(Position) // 1000, 60)
+        song_pos = f"{minutes}:{seconds:02d}"
 
-        return (Song, Artist, song_lenth, song_pos)
+        return (Song, Artist, song_length, song_pos)
 
 def Prefs():
     exist = os.path.exists("Settings/settings.ini")
