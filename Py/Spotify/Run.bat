@@ -1,1 +1,1 @@
-py Spotify.py
+python Spotify.py
