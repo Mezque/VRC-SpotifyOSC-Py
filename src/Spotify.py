@@ -9,8 +9,8 @@ import threading
 CLIENT = SimpleUDPClient("127.0.0.1", 9000)
 CONFIG = configparser.ConfigParser()
 
-SP = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id="", #put your client id here
-                                               client_secret="", #put your client secret here
+SP = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id="", #put your client id here or run Set_Environment_Variables inside the folder with the same name.
+                                               client_secret="", #put your client secret here or run Set_Environment_Variables inside the folder with the same name.
                                                redirect_uri="http://localhost:8888/spotify/callback",
                                                scope="user-read-currently-playing")) # You can find out more about what this means here, https://developer.spotify.com/documentation/general/guides/authorization/scopes/ basically it allows the program to read your current playing song, but no other control over your spotify account.
 Song1 = ["", True]
@@ -75,7 +75,11 @@ def loop():
     song, artist, song_lenth, song_pos = get_current_song_and_artist()
     cur_song = song
     cur_artist = artist
-    KeepSendingOSC = CONFIG.getboolean('Preferences', 'KeepSendingOSC')
+    try:
+        KeepSendingOSC = CONFIG.getboolean('Preferences', 'KeepSendingOSC')
+    except:
+        Prefs()
+        KeepSendingOSC = CONFIG.getboolean('Preferences', 'KeepSendingOSC')
     if KeepSendingOSC:
         if cur_song != prev_song:
             print("- Currently Playing:", cur_song, "by", cur_artist)
@@ -99,7 +103,6 @@ def main():
     Prefs()
     thread = threading.Thread(target=loop)
     thread.start()
-    
-main()
+
 if __name__ == "__main__":
     main()
