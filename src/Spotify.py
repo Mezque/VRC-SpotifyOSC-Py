@@ -56,6 +56,7 @@ def Prefs():
         writeNewFile = open('Settings/settings.ini', 'w')
         writeNewFile.write('[Preferences]\nKeepSendingOSC=true')
         writeNewFile.close
+
 stop_timer=False
 def send_message():
     song, artist, song_lenth, song_pos = get_current_song_and_artist()
