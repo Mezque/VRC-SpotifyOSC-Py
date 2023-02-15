@@ -8,12 +8,11 @@ import threading
 
 CLIENT = SimpleUDPClient("127.0.0.1", 9000)
 CONFIG = configparser.ConfigParser()
-
+Song1 = ["", True]
 SP = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id="", #put your client id here or run Set_Environment_Variables inside the folder with the same name.
                                                client_secret="", #put your client secret here or run Set_Environment_Variables inside the folder with the same name.
                                                redirect_uri="http://localhost:8888/spotify/callback",
                                                scope="user-read-currently-playing user-read-playback-state")) # You can find out more about what this means here, https://developer.spotify.com/documentation/general/guides/authorization/scopes/ basically it allows the program to read your current playing song, but no other control over your spotify account.
-Song1 = ["", True]
 '''
 1: Go to https://developer.spotify.com/dashboard/ and log in with your Spotify account and then create yourself a new app. 
 2: You will be redirected to the dashboard of your app, copy the client id and client secret (press Show Client Secret) and paste them in the apove string feilds as discribed.
@@ -61,21 +60,21 @@ def Prefs():
 
 stop_timer=False
 def send_message():
-    song, artist, volme ,song_lenth, song_pos = get_current_song_and_artist()
-    cur_volume = volme
-    if (cur_volume == 0):
-        cur_volume = f"🔇{cur_volume}"
-    elif(cur_volume <= 50):
-        cur_volume = f"🔉{cur_volume}"
+    song, artist, volume ,song_lenth, song_pos = get_current_song_and_artist()
+    if (volume == 0):
+        volume = f"🔇{volume}"
+    elif(volume <= 50):
+        volume = f"🔉{volume}"
     else:
-        cur_volume = f"🔊{cur_volume}"
-    Song1[0] = f"Now playing {song} by {artist} {song_pos}/{song_lenth} {cur_volume}"
+        volume = f"🔊{volume}"
+    Song1[0] = f"Now playing {song} by {artist} {song_pos}/{song_lenth} {volume}"
     CLIENT.send_message("/chatbox/input",Song1) 
     if not stop_timer:
         thread = threading.Timer(5, send_message)
         thread.start()
 
 def loop():
+    print("[DEBUG] Enter loop function")
     prev_song = ""
     song, artist, volume, song_lenth, song_pos = get_current_song_and_artist()
     try:
