@@ -62,12 +62,14 @@ def Prefs():
 stop_timer=False
 def send_message():
     song, artist, volme ,song_lenth, song_pos = get_current_song_and_artist()
-    cur_song = song
-    cur_artist = artist
     cur_volume = volme
-    time1 = song_lenth
-    time2 = song_pos
-    Song1[0] = f"Now playing {cur_song} by {cur_artist} {time2}/{time1} 🔉{cur_volume}"
+    if (cur_volume == 0):
+        cur_volume = f"🔇{cur_volume}"
+    elif(cur_volume <= 50):
+        cur_volume = f"🔉{cur_volume}"
+    else:
+        cur_volume = f"🔊{cur_volume}"
+    Song1[0] = f"Now playing {song} by {artist} {song_pos}/{song_lenth} {cur_volume}"
     CLIENT.send_message("/chatbox/input",Song1) 
     if not stop_timer:
         thread = threading.Timer(5, send_message)
@@ -76,22 +78,20 @@ def send_message():
 def loop():
     prev_song = ""
     song, artist, volume, song_lenth, song_pos = get_current_song_and_artist()
-    cur_song = song
-    cur_artist = artist
     try:
         KeepSendingOSC = CONFIG.getboolean('Preferences', 'KeepSendingOSC')
     except:
         Prefs()
         KeepSendingOSC = CONFIG.getboolean('Preferences', 'KeepSendingOSC')
     if KeepSendingOSC:
-        if cur_song != prev_song:
-            print("- Currently Playing:", cur_song, "by", cur_artist)
-            prev_song = cur_song
+        if song != prev_song:
+            print("- Currently Playing:", song, "by", artist)
+            prev_song = song
         thread2 = threading.Timer(5, send_message)
         thread2.start()
     else:
-        if cur_song != prev_song:
-            Song1[0] = f"Now playing {cur_song} by {cur_artist}"
+        if song != prev_song:
+            Song1[0] = f"Now playing {song} by {artist}"
             CLIENT.send_message("/chatbox/input",Song1) 
             time.sleep(2)
             loop()
