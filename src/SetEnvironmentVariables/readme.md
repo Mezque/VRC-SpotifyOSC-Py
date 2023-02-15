@@ -12,7 +12,7 @@ For Linux and macOS users, you can run the `Set_Persistent_Environment_Variables
 
 Additionally, two versions of the Linux and macOS script are included. One version sets the environment variables persistently _( named according to the OS it's meant to run on. )_, and the other version sets them only for the current shell session. If for whatever reason you do not desire to set these variables forever run the one titled `Set_Shell_Environment_Variables`, do keep in mind you will require to run the script each time you want to use the python program if you don't use the persistent option, you may want to edit the `.sh` to contain your client and secret IDs if you want to use the non persistent script. _( non persistent script is not OS dependant. )_
 
->Note that depending on your system configuration _( mainly Linux users )_, you may need to modify these scripts to work correctly on your machine. Linux and macOS users may also need to `chmod +x` the `.sh` files to be able to execute them.
+> **Note**: that depending on your system configuration _( mainly Linux users )_, you may need to modify these scripts to work correctly on your machine. Linux and macOS users may also need to `chmod +x` the `.sh` files to be able to execute them.
 
 ## Why set up Environment Variables?
 Really you don't need to if you wish to just contiune to put the client and secret ID in the python file directly as thats still supported, it is generally considered better practice to use environment variables instead. Not only does it enhance security by removing sensitive information from the code, it additionally it makes it easier for me to not do the same on mistake well pushing to the repository.
