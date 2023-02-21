@@ -8,12 +8,11 @@ import threading
 
 CLIENT = SimpleUDPClient("127.0.0.1", 9000)
 CONFIG = configparser.ConfigParser()
-
-SP = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id="", #put your client id here
-                                               client_secret="", #put your client secret here
-                                               redirect_uri="http://localhost:8888/spotify/callback",
-                                               scope="user-read-currently-playing")) # You can find out more about what this means here, https://developer.spotify.com/documentation/general/guides/authorization/scopes/ basically it allows the program to read your current playing song, but no other control over your spotify account.
 Song1 = ["", True]
+SP = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id="", #put your client id here or run Set_Environment_Variables inside the folder with the same name.
+                                               client_secret="", #put your client secret here or run Set_Environment_Variables inside the folder with the same name.
+                                               redirect_uri="http://localhost:8888/spotify/callback",
+                                               scope="user-read-currently-playing user-read-playback-state")) # You can find out more about what this means here, https://developer.spotify.com/documentation/general/guides/authorization/scopes/ basically it allows the program to read your current playing song, but no other control over your spotify account.
 '''
 1: Go to https://developer.spotify.com/dashboard/ and log in with your Spotify account and then create yourself a new app. 
 2: You will be redirected to the dashboard of your app, copy the client id and client secret (press Show Client Secret) and paste them in the apove string feilds as discribed.
@@ -27,6 +26,7 @@ def DisplayName():
 
 def get_current_song_and_artist():
     CurSong = SP.current_user_playing_track()
+    CurPlayback = SP.current_playback()
     if CurSong is None:
         print("No song is currently playing")
         return None, None, None, None
@@ -34,6 +34,7 @@ def get_current_song_and_artist():
         Song = CurSong["item"]["name"]
         Artist = CurSong['item']['artists'][0]['name']
         Length = CurSong['item']["duration_ms"]
+        Volume = CurPlayback['device']['volume_percent']
         minutes, seconds = divmod(int(Length) // 1000, 60)
         song_length = f"{minutes}:{seconds:02d}"
 
@@ -41,7 +42,7 @@ def get_current_song_and_artist():
         minutes, seconds = divmod(int(Position) // 1000, 60)
         song_pos = f"{minutes}:{seconds:02d}"
 
-        return (Song, Artist, song_length, song_pos)
+        return (Song, Artist, Volume ,song_length, song_pos)
 
 def Prefs():
     exist = os.path.exists("Settings/settings.ini")
@@ -56,40 +57,46 @@ def Prefs():
         writeNewFile = open('Settings/settings.ini', 'w')
         writeNewFile.write('[Preferences]\nKeepSendingOSC=true')
         writeNewFile.close
+
 stop_timer=False
 def send_message():
-    song, artist, song_lenth, song_pos = get_current_song_and_artist()
-    cur_song = song
-    cur_artist = artist
-    time1 = song_lenth
-    time2 = song_pos
-    Song1[0] = f"Now playing {cur_song} by {cur_artist} {time2}/{time1}"
+    song, artist, volume ,song_lenth, song_pos = get_current_song_and_artist()
+    if (volume == 0):
+        volume = f"🔇{volume}"
+    elif(volume <= 50):
+        volume = f"🔉{volume}"
+    else:
+        volume = f"🔊{volume}"
+    Song1[0] = f"Now playing {song} by {artist} {song_pos}/{song_lenth} {volume}"
     CLIENT.send_message("/chatbox/input",Song1) 
     if not stop_timer:
         thread = threading.Timer(5, send_message)
         thread.start()
 
 def loop():
+    print("[DEBUG] Enter loop function")
     prev_song = ""
-    song, artist, song_lenth, song_pos = get_current_song_and_artist()
-    cur_song = song
-    cur_artist = artist
-    KeepSendingOSC = CONFIG.getboolean('Preferences', 'KeepSendingOSC')
+    song, artist, volume, song_lenth, song_pos = get_current_song_and_artist()
+    try:
+        KeepSendingOSC = CONFIG.getboolean('Preferences', 'KeepSendingOSC')
+    except:
+        Prefs()
+        KeepSendingOSC = CONFIG.getboolean('Preferences', 'KeepSendingOSC')
     if KeepSendingOSC:
-        if cur_song != prev_song:
-            print("- Currently Playing:", cur_song, "by", cur_artist)
-            prev_song = cur_song
+        if song != prev_song:
+            print("- Currently Playing:", song, "by", artist)
+            prev_song = song
         thread2 = threading.Timer(5, send_message)
         thread2.start()
     else:
-        if cur_song != prev_song:
-            Song1[0] = f"Now playing {cur_song} by {cur_artist}"
+        if song != prev_song:
+            Song1[0] = f"Now playing {song} by {artist}"
             CLIENT.send_message("/chatbox/input",Song1) 
             time.sleep(2)
             loop()
 
 def main():
-    song,artist,song_lenth,song_pos = get_current_song_and_artist()
+    song,artist,volume,song_lenth,song_pos = get_current_song_and_artist()
     print("--------------------------------")
     print("- Starting Spotify API Python  -")
     print("- Current User:", DisplayName())
@@ -98,7 +105,6 @@ def main():
     Prefs()
     thread = threading.Thread(target=loop)
     thread.start()
-    
-main()
+
 if __name__ == "__main__":
     main()

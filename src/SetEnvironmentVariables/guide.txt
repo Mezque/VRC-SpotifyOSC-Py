@@ -1,0 +1,6 @@
+Windows users can set the environment variables by running the Set_Environment_Variable.bat or Set_Environment_Variables.ps1 file, and entering their Spotify client ID and client secret ID when prompted.
+
+Linux or MacOS users run the sh file for your corresponding OS as the MacOS one changes "/etc/launchd.conf" and the linux one "/etc/environment"
+For Linux and Mac, the script titled with "shell" will not persist the env variables after you close the shell and the persistent ones will set variables that are system wide, this is the behaviour of both windows options and should be the one you choose as well, though if its for whatever reason not what you want you may run the ones titled with "shell"
+
+Mac user run ` sudo launchctl < /etc/launchd.conf ` after to reload launchd with out rebooting your system.
